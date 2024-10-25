@@ -21,6 +21,7 @@ def main():
     parser.add_argument('--position', type=str, choices=['top-left', 'top-right', 'bottom-left', 'bottom-right', 'center'], default='bottom-right', help="Position of the watermark")
     parser.add_argument('--alpha', type=float, default=0.5, help="Transparency level of the watermark (0 to 1, default is 0.5)")
     parser.add_argument('--fill', action='store_true', help="Flag to fill the entire image with watermark")
+    parser.add_argument('--text_color', type=str, default="#ffffff", help="Hex color code for the text watermark.")
 
     args = parser.parse_args()
 
@@ -36,7 +37,8 @@ def main():
             watermark_image=args.watermark_image,
             position=args.position,
             alpha=args.alpha,
-            fill=args.fill
+            fill=args.fill,
+            text_color=args.text_color
         )
 
 
