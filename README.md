@@ -12,7 +12,7 @@ library, this tool can adjust image dimensions while maintaining aspect ratio an
 - **Fill Watermarks**: Optionally fill the entire image with the watermark (for that professional, branded wallpaper
   effect).
 
-## Requirements
+## Requirements (If not using the `.exe`)
 
 - Python 3.7 or higher
 - Pillow (Python Imaging Library)
@@ -21,13 +21,22 @@ Install the required dependencies with:
 
 ```bash
 pip install pillow
+pip install matplotlib
 ```
 
 ## Usage
-### Basic Usage
 
-Use the .exe file, otherwise follow the next steps:
+### Run the Executable
+Download and execute the `.exe` file.
 
+### Launch the UI from Command Line
+To open the graphical interface using the command line:
+```bash
+py .\src\ui\bulk_image_editor_ui.py
+```
+
+### Run Main Script with Command Line Arguments
+To process images directly from the command line, use:
 ```bash
 py .\main.py --input_path path/to/input --output_path path/to/output [options]
 ```
