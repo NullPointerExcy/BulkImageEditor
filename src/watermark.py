@@ -18,6 +18,11 @@ def add_watermark(
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
+    try:
+        font = ImageFont.truetype(font, font_size)
+    except IOError:
+        font = ImageFont.load_default()
+
     for filename in os.listdir(input_dir):
         if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             img_path = os.path.join(input_dir, filename)
@@ -38,11 +43,6 @@ def add_watermark(
                     watermark_layer.paste(watermark, (x, y), watermark)
             else:
                 draw = ImageDraw.Draw(watermark_layer)
-                try:
-                    font = ImageFont.truetype(font, font_size)
-                except IOError:
-                    font = ImageFont.load_default()
-
                 if not text_color.startswith('#') or len(text_color) != 7:
                     raise ValueError(f"Invalid hex color format: {text_color}. Expected format: '#RRGGBB'")
                 color_with_alpha = tuple(int(text_color[i:i + 2], 16) for i in (1, 3, 5)) + (int(255 * alpha),)
