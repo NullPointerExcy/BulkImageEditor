@@ -13,6 +13,7 @@ def main():
     # Optional flags for resizing
     parser.add_argument('--resize', action='store_true', help="Flag to resize the image")
     parser.add_argument('--max_width', type=int, default=800, help="Max width for resizing (default is 800)")
+    parser.add_argument('--max_height', type=int, default=800, help="Max height for resizing (default is 800)")
 
     # Optional flags for adding watermark
     parser.add_argument('--add_watermark', action='store_true', help="Flag to add a watermark to the image")
@@ -27,7 +28,7 @@ def main():
 
     if args.resize:
         print("Resizing the image...")
-        resize_images_maintain_aspect_ratio(input_dir=args.input_path, output_dir=args.output_path, max_width=args.max_width)
+        resize_images_maintain_aspect_ratio(input_dir=args.input_path, output_dir=args.output_path, max_size=(args.max_width, args.max_height))
     if args.add_watermark:
         print("Adding watermark to the image...")
         add_watermark(
