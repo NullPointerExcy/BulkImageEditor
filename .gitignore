@@ -1,2 +1,14 @@
 venv
 .idea
+
+images/input/*.png
+images/input/*.jpg
+images/input/*.jpeg
+
+images/output/*.png
+images/output/*.jpg
+images/output/*.jpeg
+
+images/watermark/*.png
+images/watermark/*.jpg
+images/watermark/*.jpeg
