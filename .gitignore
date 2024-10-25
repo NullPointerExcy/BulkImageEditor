@@ -1,5 +1,7 @@
 venv
 .idea
+dist
+build
 
 images/input/*.png
 images/input/*.jpg

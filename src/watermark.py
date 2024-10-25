@@ -10,6 +10,7 @@ def add_watermark(
         watermark_image: Optional[str] = None,
         font_size: int = 30,
         font: str = "arial.ttf",
+        text_color: str = "#ffffff",
         position: Literal["bottom-left", "bottom-right", "top-left", "top-right", "center"] = "bottom-right",
         alpha: float = 0.5,
         fill: bool = False
@@ -24,6 +25,7 @@ def add_watermark(
             watermark_layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
 
             if watermark_image:
+                print("Adding watermark image to image...")
                 watermark = Image.open(watermark_image).convert("RGBA")
                 watermark = resize_watermark(watermark, img.size)
 
@@ -41,13 +43,17 @@ def add_watermark(
                 except IOError:
                     font = ImageFont.load_default()
 
+                if not text_color.startswith('#') or len(text_color) != 7:
+                    raise ValueError(f"Invalid hex color format: {text_color}. Expected format: '#RRGGBB'")
+                color_with_alpha = tuple(int(text_color[i:i + 2], 16) for i in (1, 3, 5)) + (int(255 * alpha),)
+
                 if fill:
-                    fill_watermark_text(draw, img.size, watermark_text, font, alpha)
+                    fill_watermark_text(draw, img.size, watermark_text, font, color_with_alpha)
                 else:
                     bbox = draw.textbbox((0, 0), watermark_text, font=font)
                     text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
                     x, y = get_watermark_position(img.size, text_width, text_height, position)
-                    draw.text((x, y), watermark_text, font=font, fill=(255, 255, 255, int(255 * alpha)))
+                    draw.text((x, y), watermark_text, font=font, fill=color_with_alpha)
 
             watermarked_image = Image.alpha_composite(img, watermark_layer)
             output_image = watermarked_image.convert("RGB")
@@ -105,13 +111,14 @@ def tile_watermark(base_layer, watermark):
     return base_layer
 
 
-def fill_watermark_text(draw, img_size, text, font, alpha):
+def fill_watermark_text(draw, img_size, text, font, color):
     img_width, img_height = img_size
-    text_width, text_height = draw.textsize(text, font=font)
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
 
     for x in range(0, img_width, text_width + 50):
         for y in range(0, img_height, text_height + 50):
-            draw.text((x, y), text, font=font, fill=(255, 255, 255, int(255 * alpha)))
+            draw.text((x, y), text, font=font, fill=color)
 
 
 if __name__ == "__main__":
@@ -119,9 +126,9 @@ if __name__ == "__main__":
         "../images/input",
         "../images/output",
         watermark_text="Test Watermark",
-        watermark_image="../images/watermark/test.png",
+        watermark_image="../images/watermark/test.jpeg",
         font_size=40,
         position="bottom-right",
         alpha=0.4,
-        fill=True
+        fill=False
     )
