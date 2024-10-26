@@ -2,6 +2,8 @@
 
 [![Download Latest Release](https://img.shields.io/github/v/release/NullPointerExcy/BulkImageEditor)](https://github.com/NullPointerExcy/BulkImageEditor/releases/latest)
 
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
 A simple image processing tool for resizing images and adding text watermarks to them. Built using Python's `Pillow`
 library, this tool can adjust image dimensions while maintaining aspect ratio and apply customizable text or image watermarks.
 
